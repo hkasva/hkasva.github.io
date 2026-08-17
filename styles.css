@@ -1,12 +1,17 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
   color: #222;
   max-width: 700px;
   margin: 60px auto;
   padding: 0 20px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+  background-size: 400% 400%;
+  animation: moodShift 15s ease infinite;
 }
 
-h1 {
-  color: #2563eb;
+@keyframes moodShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
