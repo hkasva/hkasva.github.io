@@ -19,7 +19,7 @@
   <p id="fact-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
 </div>
 
-<<script>
+<script>
   function getFact() {
     document.getElementById("fact-output").textContent = "Loading...";
     fetch("https://uselessfacts.jsp.workers.dev/api/v2/facts/random?language=en")
