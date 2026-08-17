@@ -12,5 +12,29 @@
   <p style="font-size: 20px;">🚧 THIS SITE IS UNDER CONSTRUCTION 🚧</p>
     <p>👀 You are visitor number: <strong>1</strong></p>
 </div>
+  <div style="margin-top: 30px; text-align: center;">
+  <button onclick="roastMe()" style="font-size: 18px; padding: 10px 20px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
+    🔥 Roast My Code
+  </button>
+  <p id="roast-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
+</div>
+
+<script>
+  const roasts = [
+    "This CSS was written at 2am and it shows.",
+    "Your code doesn't have bugs, it has surprise features.",
+    "You've committed 'fix typo' more times than actual features.",
+    "Your Git history reads like a diary of regret.",
+    "This site works, and nobody — including you — knows why.",
+    "You didn't Google the error, you just stared at it until it felt bad.",
+    "Your variable names are just vibes at this point.",
+    "This is held together by hope and one Stack Overflow answer from 2013."
+  ];
+
+  function roastMe() {
+    const random = roasts[Math.floor(Math.random() * roasts.length)];
+    document.getElementById("roast-output").textContent = random;
+  }
+</script>
 </body>
 </html>
