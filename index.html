@@ -13,27 +13,23 @@
   <p style="font-size: 20px;">🚧 THIS SITE IS UNDER CONSTRUCTION 🚧</p>
     </div>
   <div style="margin-top: 30px; text-align: center;">
-  <button onclick="roastMe()" style="font-size: 18px; padding: 10px 20px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
-    🔥 Roast My Code
+  <button onclick="getFact()" style="font-size: 18px; padding: 10px 20px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
+    🧠 Give Me a Random Fact
   </button>
-  <p id="roast-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
+  <p id="fact-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
 </div>
 
 <script>
-  const roasts = [
-    "This CSS was written at 2am and it shows.",
-    "Your code doesn't have bugs, it has surprise features.",
-    "You've committed 'fix typo' more times than actual features.",
-    "Your Git history reads like a diary of regret.",
-    "This site works, and nobody — including you — knows why.",
-    "You didn't Google the error, you just stared at it until it felt bad.",
-    "Your variable names are just vibes at this point.",
-    "This is held together by hope and one Stack Overflow answer from 2013."
-  ];
-
-  function roastMe() {
-    const random = roasts[Math.floor(Math.random() * roasts.length)];
-    document.getElementById("roast-output").textContent = random;
+  function getFact() {
+    document.getElementById("fact-output").textContent = "Loading...";
+    fetch("https://uselessfacts.jsp.workers.dev/api/v2/facts/random")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("fact-output").textContent = data.text;
+      })
+      .catch(error => {
+        document.getElementById("fact-output").textContent = "Couldn't fetch a fact — try again!";
+      });
   }
 </script>
 </body>
