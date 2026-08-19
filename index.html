@@ -41,21 +41,28 @@
   </div>
 
   <script>
-    function getSpacePhoto() {
-      document.getElementById("space-output").innerHTML = "Loading...";
-      fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
-        .then(response => response.json())
-        .then(data => {
+  function getSpacePhoto() {
+    document.getElementById("space-output").innerHTML = "Loading...";
+    fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
+      .then(response => response.json())
+      .then(data => {
+        if (data.media_type === "video") {
+          document.getElementById("space-output").innerHTML = `
+            <p style="font-style: italic;">${data.title}</p>
+            <a href="${data.url}" target="_blank" style="color: #2563eb;">Today's feature is a video — watch it here →</a>
+          `;
+        } else {
           document.getElementById("space-output").innerHTML = `
             <img src="${data.url}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
             <p style="font-style: italic; margin-top: 10px;">${data.title}</p>
           `;
-        })
-        .catch(error => {
-          document.getElementById("space-output").textContent = "Couldn't reach space today — try again!";
-        });
-    }
-  </script>
+        }
+      })
+      .catch(error => {
+        document.getElementById("space-output").textContent = "Couldn't reach space today — try again!";
+      });
+  }
+</script>
 
   <script>
     function getRadio() {
