@@ -43,7 +43,7 @@
   <script>
   function getSpacePhoto() {
     document.getElementById("space-output").innerHTML = "Loading...";
-    fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
+    fetch("https://api.nasa.gov/planetary/apod?api_key=BJLdvqSbBFaedc29QnaYCrtewTna9RRmzjI1JQNZ")
       .then(response => response.json())
       .then(data => {
         if (data.media_type === "video") {
