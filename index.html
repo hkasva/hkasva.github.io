@@ -47,12 +47,19 @@
       .then(response => response.json())
       .then(data => {
         if (data.media_type === "video") {
-          document.getElementById("space-output").innerHTML = `
-            <p style="font-style: italic;">${data.title}</p>
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-              <iframe src="${data.url}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
-            </div>
-          `;
+          if (data.url.includes("youtube.com") || data.url.includes("youtu.be") || data.url.includes("vimeo.com")) {
+            document.getElementById("space-output").innerHTML = `
+              <p style="font-style: italic;">${data.title}</p>
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                <iframe src="${data.url}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+              </div>
+            `;
+          } else {
+            document.getElementById("space-output").innerHTML = `
+              <p style="font-style: italic;">${data.title}</p>
+              <a href="${data.url}" target="_blank" style="color: #2563eb;">This video can't be embedded — watch it here →</a>
+            `;
+          }
         } else {
           document.getElementById("space-output").innerHTML = `
             <img src="${data.url}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
