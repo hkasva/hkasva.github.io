@@ -13,22 +13,26 @@
 </a>
   <hr>
 <div style="margin-top: 30px; text-align: center; padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.5);">
-  <p style="font-size: 20px;">😴 Bored? Here's something to do instead of reading my website:</p>
-  <button onclick="getActivity()" style="font-size: 18px; padding: 10px 20px; margin-top: 10px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
-    🎲 Give Me Something To Do
+  <p style="font-size: 20px;">🚀 NASA's Photo of the Day</p>
+  <button onclick="getSpacePhoto()" style="font-size: 18px; padding: 10px 20px; margin-top: 10px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
+    🔭 Show Me Space
   </button>
-  <p id="activity-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
+  <div id="space-output" style="margin-top: 15px;"></div>
 </div>
+
 <script>
-  function getActivity() {
-    document.getElementById("activity-output").textContent = "Thinking...";
-    fetch("https://www.boredapi.com/api/activity")
+  function getSpacePhoto() {
+    document.getElementById("space-output").innerHTML = "Loading...";
+    fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
       .then(response => response.json())
       .then(data => {
-        document.getElementById("activity-output").textContent = data.activity;
+        document.getElementById("space-output").innerHTML = `
+          <img src="${data.url}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+          <p style="font-style: italic; margin-top: 10px;">${data.title}</p>
+        `;
       })
       .catch(error => {
-        document.getElementById("activity-output").textContent = "Couldn't think of anything — you're on your own.";
+        document.getElementById("space-output").textContent = "Couldn't reach space today — try again!";
       });
   }
 </script>
