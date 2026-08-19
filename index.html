@@ -45,10 +45,14 @@
   <script>
   function getRadio() {
     document.getElementById("radio-output").innerHTML = "Tuning in...";
-    fetch("https://de1.api.radio-browser.info/json/stations/search?limit=1&order=random&hidebroken=true")
+    fetch("https://de1.api.radio-browser.info/json/stations/search?limit=1&order=random&hidebroken=true&is_https=true")
       .then(response => response.json())
       .then(data => {
         const station = data[0];
+        if (!station || !station.url_resolved.startsWith("https://")) {
+          document.getElementById("radio-output").textContent = "Got a dud signal — hit the button again!";
+          return;
+        }
         document.getElementById("radio-output").innerHTML = `
           <p style="font-style: italic;">📍 ${station.name} — ${station.country}</p>
           <audio controls autoplay src="${station.url_resolved}" style="margin-top: 10px;"></audio>
