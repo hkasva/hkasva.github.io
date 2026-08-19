@@ -1,103 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harnoor Kasva</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fhkasva.github.io&countColor=%23263759" style="position: absolute; top: 20px; right: 20px;" />
-  <h1>Hi, I'm Harnoor 👋</h1>
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+    <h1 style="margin: 0;">Hi, I'm Harnoor 👋</h1>
+    <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fhkasva.github.io&countColor=%23263759" />
+  </div>
+
   <p>Welcome to my personal website</p>
-  <div style="display: flex; gap: 10px; margin-top: 10px;">
-  <a href="https://x.com/HarnoorKasva" target="_blank" style="display: inline-block; padding: 8px 16px; background: #000; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;">
-    Follow me on X →
-  </a>
-  <button onclick="getRadio()" style="padding: 8px 16px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white; font-size: 14px;">
-    🌍 Play Random World Radio
-  </button>
-</div>
-<div id="radio-output" style="margin-top: 15px;"></div>
+
+  <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+    <a href="https://x.com/HarnoorKasva" target="_blank" style="display: inline-block; padding: 8px 16px; background: #000; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;">
+      Follow me on X →
+    </a>
+    <button onclick="getRadio()" style="padding: 8px 16px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white; font-size: 14px;">
+      🌍 Play Random World Radio
+    </button>
+    <button onclick="getFact()" style="padding: 8px 16px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white; font-size: 14px;">
+      🗣️ Unsolicited Advice
+    </button>
+  </div>
+
+  <div id="radio-output" style="margin-top: 15px;"></div>
+  <p id="fact-output" style="margin-top: 10px; font-style: italic; min-height: 24px;"></p>
+
   <hr>
-<div style="margin-top: 30px; text-align: center; padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.5);">
-  <p style="font-size: 20px;">🚀 NASA's Photo of the Day</p>
-  <button onclick="getSpacePhoto()" style="font-size: 18px; padding: 10px 20px; margin-top: 10px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
-    🔭 Show Me Space
-  </button>
-  <div id="space-output" style="margin-top: 15px;"></div>
-</div>
 
-<script>
-  function getSpacePhoto() {
-    document.getElementById("space-output").innerHTML = "Loading...";
-    fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("space-output").innerHTML = `
-          <img src="${data.url}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-          <p style="font-style: italic; margin-top: 10px;">${data.title}</p>
-        `;
-      })
-      .catch(error => {
-        document.getElementById("space-output").textContent = "Couldn't reach space today — try again!";
-      });
-  }
-</script>
+  <div style="margin-top: 30px; text-align: center; padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.5);">
+    <p style="font-size: 20px;">🚀 NASA's Photo of the Day</p>
+    <button onclick="getSpacePhoto()" style="font-size: 18px; padding: 10px 20px; margin-top: 10px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
+      🔭 Show Me Space
+    </button>
+    <div id="space-output" style="margin-top: 15px;"></div>
+  </div>
+
   <script>
-  function getRadio() {
-    document.getElementById("radio-output").innerHTML = "Tuning in...";
-    fetch("https://de1.api.radio-browser.info/json/stations/search?limit=1&order=random&hidebroken=true&is_https=true")
-      .then(response => response.json())
-      .then(data => {
-        const station = data[0];
-        if (!station || !station.url_resolved.startsWith("https://")) {
-          document.getElementById("radio-output").innerHTML = "Got a dud signal — hit the button again!";
-          return;
-        }
-        document.getElementById("radio-output").innerHTML = `
-          <p style="font-style: italic;">📍 ${station.name} — ${station.country}</p>
-          <audio id="radio-player" controls autoplay src="${station.url_resolved}" style="margin-top: 10px;"></audio>
-          <p id="radio-status" style="font-size: 13px; color: #666;"></p>
-        `;
+    function getSpacePhoto() {
+      document.getElementById("space-output").innerHTML = "Loading...";
+      fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("space-output").innerHTML = `
+            <img src="${data.url}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+            <p style="font-style: italic; margin-top: 10px;">${data.title}</p>
+          `;
+        })
+        .catch(error => {
+          document.getElementById("space-output").textContent = "Couldn't reach space today — try again!";
+        });
+    }
+  </script>
 
-        const audio = document.getElementById("radio-player");
-        const status = document.getElementById("radio-status");
-
-        audio.onerror = () => {
-          status.textContent = "This station's dead — click the button again for a new one.";
-        };
-
-        // If it hasn't started actually playing within 5 seconds, warn the user
-        setTimeout(() => {
-          if (audio.currentTime === 0) {
-            status.textContent = "No sound detected — this station might be silent. Try again!";
+  <script>
+    function getRadio() {
+      document.getElementById("radio-output").innerHTML = "Tuning in...";
+      fetch("https://de1.api.radio-browser.info/json/stations/search?limit=1&order=random&hidebroken=true&is_https=true")
+        .then(response => response.json())
+        .then(data => {
+          const station = data[0];
+          if (!station || !station.url_resolved.startsWith("https://")) {
+            document.getElementById("radio-output").innerHTML = "Got a dud signal — hit the button again!";
+            return;
           }
-        }, 5000);
-      })
-      .catch(error => {
-        document.getElementById("radio-output").textContent = "Static on the line — try again!";
-      });
-  }
-</script>
-  <div style="margin-top: 30px; text-align: center;">
-  <button onclick="getFact()" style="font-size: 18px; padding: 10px 20px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
-    🗣️ Unsolicited advice
-  </button>
-  <p id="fact-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
-</div>
+          document.getElementById("radio-output").innerHTML = `
+            <p style="font-style: italic;">📍 ${station.name} — ${station.country}</p>
+            <audio id="radio-player" controls autoplay src="${station.url_resolved}" style="margin-top: 10px; max-width: 100%;"></audio>
+            <p id="radio-status" style="font-size: 13px; color: #666;"></p>
+          `;
 
-<script>
-  function getFact() {
-    document.getElementById("fact-output").textContent = "Loading...";
-    fetch("https://api.adviceslip.com/advice")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("fact-output").textContent = data.slip.advice;
-      })
-      .catch(error => {
-        document.getElementById("fact-output").textContent = "Couldn't fetch a fact — try again!";
-      });
-  }
-</script>
-<!-- <audio controls autoplay src="https://ice1.somafm.com/groovesalad-256-mp3" style="margin-top: 10px;"></audio> -->
+          const audio = document.getElementById("radio-player");
+          const status = document.getElementById("radio-status");
+
+          audio.onerror = () => {
+            status.textContent = "This station's dead — click the button again for a new one.";
+          };
+
+          setTimeout(() => {
+            if (audio.currentTime === 0) {
+              status.textContent = "No sound detected — this station might be silent. Try again!";
+            }
+          }, 5000);
+        })
+        .catch(error => {
+          document.getElementById("radio-output").textContent = "Static on the line — try again!";
+        });
+    }
+  </script>
+
+  <script>
+    function getFact() {
+      document.getElementById("fact-output").textContent = "Loading...";
+      fetch("https://api.adviceslip.com/advice")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("fact-output").textContent = data.slip.advice;
+        })
+        .catch(error => {
+          document.getElementById("fact-output").textContent = "Couldn't fetch a fact — try again!";
+        });
+    }
+  </script>
+
 </body>
 </html>
