@@ -12,9 +12,26 @@
   Follow me on X →
 </a>
   <hr>
-<div style="border: 3px dashed #ff6b6b; padding: 15px; margin-top: 30px; background: rgba(255,255,255,0.6);">
-  <p style="font-size: 20px;">🚧 THIS SITE IS UNDER CONSTRUCTION 🚧</p>
-    </div>
+<div style="margin-top: 30px; text-align: center; border: 3px dashed #333; padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.5);">
+  <p style="font-size: 20px;">😴 Bored? Here's something to do instead of reading my website:</p>
+  <button onclick="getActivity()" style="font-size: 18px; padding: 10px 20px; margin-top: 10px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
+    🎲 Give Me Something To Do
+  </button>
+  <p id="activity-output" style="margin-top: 15px; font-style: italic; min-height: 24px;"></p>
+</div>
+<script>
+  function getActivity() {
+    document.getElementById("activity-output").textContent = "Thinking...";
+    fetch("https://bored-api.appbrewery.com/random")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("activity-output").textContent = data.activity;
+      })
+      .catch(error => {
+        document.getElementById("activity-output").textContent = "Couldn't think of anything — you're on your own.";
+      });
+  }
+</script>
   <div style="margin-top: 30px; text-align: center;">
   <button onclick="getFact()" style="font-size: 18px; padding: 10px 20px; cursor: pointer; border-radius: 8px; border: none; background: #333; color: white;">
     🗣️ Unsolicited advice
