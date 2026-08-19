@@ -50,13 +50,28 @@
       .then(data => {
         const station = data[0];
         if (!station || !station.url_resolved.startsWith("https://")) {
-          document.getElementById("radio-output").textContent = "Got a dud signal — hit the button again!";
+          document.getElementById("radio-output").innerHTML = "Got a dud signal — hit the button again!";
           return;
         }
         document.getElementById("radio-output").innerHTML = `
           <p style="font-style: italic;">📍 ${station.name} — ${station.country}</p>
-          <audio controls autoplay src="${station.url_resolved}" style="margin-top: 10px;"></audio>
+          <audio id="radio-player" controls autoplay src="${station.url_resolved}" style="margin-top: 10px;"></audio>
+          <p id="radio-status" style="font-size: 13px; color: #666;"></p>
         `;
+
+        const audio = document.getElementById("radio-player");
+        const status = document.getElementById("radio-status");
+
+        audio.onerror = () => {
+          status.textContent = "This station's dead — click the button again for a new one.";
+        };
+
+        // If it hasn't started actually playing within 5 seconds, warn the user
+        setTimeout(() => {
+          if (audio.currentTime === 0) {
+            status.textContent = "No sound detected — this station might be silent. Try again!";
+          }
+        }, 5000);
       })
       .catch(error => {
         document.getElementById("radio-output").textContent = "Static on the line — try again!";
@@ -83,6 +98,6 @@
       });
   }
 </script>
-  <audio controls autoplay src="https://ice1.somafm.com/groovesalad-256-mp3" style="margin-top: 10px;"></audio>
+<!-- <audio controls autoplay src="https://ice1.somafm.com/groovesalad-256-mp3" style="margin-top: 10px;"></audio> -->
 </body>
 </html>
